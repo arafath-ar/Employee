@@ -1,0 +1,21 @@
+version: "3"
+services:
+  consul:
+    image: consul:1.5.0
+    ports:
+      - "8500:8500"
+
+  mariadb:
+    image: mariadb:10.4
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_USER: EmployersDetails
+      MYSQL_PASSWORD: employerspasswordfordb
+      MYSQL_DATABASE: EmployersDB
+    healthcheck:
+      test: ["CMD", "mysql", "-u", "root", "-proot", "-e", "SHOW databases;"]
+      interval: 5s
+      timeout: 10s
+      retries: 10
